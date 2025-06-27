@@ -6,6 +6,8 @@ use App\Filament\Resources\ClientsResource\Pages;
 use App\Filament\Resources\ClientsResource\RelationManagers;
 use App\Models\Clients;
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +25,11 @@ class ClientsResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Grid::make(5)
+                    ->schema([
+                        static::createFormSections()->columnSpan(4),
+                        static::createFormSections()->columnSpan(1),
+                    ]),
             ]);
     }
 
@@ -61,4 +67,16 @@ class ClientsResource extends Resource
             'edit' => Pages\EditClients::route('/{record}/edit'),
         ];
     }
+
+    public static function createFormSections(): Grid
+    {
+        return Grid::make()
+            ->schema([
+                Section::make(__('customer'))
+                    ->schema([
+                    ]),
+            ]);
+    }
+
+
 }
